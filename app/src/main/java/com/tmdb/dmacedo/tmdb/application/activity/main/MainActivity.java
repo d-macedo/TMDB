@@ -1,37 +1,39 @@
 package com.tmdb.dmacedo.tmdb.application.activity.main;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.tmdb.dmacedo.tmdb.R;
 import com.tmdb.dmacedo.tmdb.application.activity.detail.DetailActivity;
+import com.tmdb.dmacedo.tmdb.application.activity.main.adapter.CustomPagerAdapter;
 import com.tmdb.dmacedo.tmdb.application.activity.main.adapter.MainAdapter;
-import com.tmdb.dmacedo.tmdb.domain.usecase.main.MainUseCase;
-import com.tmdb.dmacedo.tmdb.entity.PopularMovies;
+import com.tmdb.dmacedo.tmdb.application.activity.main.fragments.MovieFragment;
+import com.tmdb.dmacedo.tmdb.application.activity.main.fragments.OtherFragment;
+import com.tmdb.dmacedo.tmdb.application.activity.main.fragments.TvFragment;
 import com.tmdb.dmacedo.tmdb.presentation.model.ResourceModel;
 import com.tmdb.dmacedo.tmdb.presentation.viewmodel.main.MainViewModel;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TvFragment.OnFragmentInteractionListener, MovieFragment.OnFragmentInteractionListener, OtherFragment.OnFragmentInteractionListener {
 
-    private static final String EXTRA_MOVIE_ID = "id";
+    private Toolbar mToolbar;
 
-    private RecyclerView mRecyclerView;
+    private TabLayout mTabLayout;
 
-    @Inject
-    protected MainViewModel mainViewModel;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +41,41 @@ public class MainActivity extends AppCompatActivity {
         AndroidInjection.inject(this);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = findViewById(R.id.main_recycler_view);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
+        mTabLayout = findViewById(R.id.tab_layout);
+        mTabLayout.addTab(mTabLayout.newTab().setText("Tv Series"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Popular Movies"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Other Categories"));
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        final CustomPagerAdapter adapter = new CustomPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
 
-        mainViewModel.loadMovies().observe(this, listResourceModel -> {
-            if (listResourceModel != null && listResourceModel.getState().equals(ResourceModel.State.SUCCESS)) {
-                mRecyclerView.setAdapter(new MainAdapter(listResourceModel.getData(), popularMovie -> {
-                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                    intent.putExtra(EXTRA_MOVIE_ID, popularMovie);
-                    startActivity(intent);
-                }));
+        mViewPager = findViewById(R.id.pager);
+        mViewPager.setAdapter(adapter);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
-
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
+    }
 }

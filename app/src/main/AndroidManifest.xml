@@ -22,8 +22,7 @@
         <activity
             android:name=".application.activity.detail.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".application.activity.main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".application.activity.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tmdb.dmacedo.tmdb.application.activity.main.MainActivity" />
