@@ -18,7 +18,7 @@ import com.tmdb.dmacedo.tmdb.R;
  * Use the {@link TvFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TvFragment extends android.app.Fragment {
+public class TvFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

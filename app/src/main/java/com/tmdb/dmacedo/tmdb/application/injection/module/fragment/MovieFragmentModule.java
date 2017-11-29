@@ -8,6 +8,8 @@ import com.tmdb.dmacedo.tmdb.domain.usecase.main.MainUseCase;
 import com.tmdb.dmacedo.tmdb.infrastructure.di.SchedulerProvider;
 import com.tmdb.dmacedo.tmdb.presentation.viewmodel.main.MovieFragmentViewModel;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
