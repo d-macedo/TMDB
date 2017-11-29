@@ -9,6 +9,7 @@ import com.tmdb.dmacedo.tmdb.domain.usecase.main.MainUseCase;
 import com.tmdb.dmacedo.tmdb.entity.PopularMovies;
 import com.tmdb.dmacedo.tmdb.infrastructure.di.SchedulerProvider;
 import com.tmdb.dmacedo.tmdb.presentation.model.ResourceModel;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,11 +20,12 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainViewModel extends ViewModel{
+public class MovieFragmentViewModel extends ViewModel {
 
     private MutableLiveData<ResourceModel<List<PopularMovies>>> movies;
 
     private MainUseCase useCase;
+
 
     @Inject
     protected SchedulerProvider provider;
@@ -46,14 +48,13 @@ public class MainViewModel extends ViewModel{
             useCase.execute(
                     Schedulers.computation(),
                     AndroidSchedulers.mainThread(),
-                    new PoupularMoviesObserver()
+                    new PoupularMoviesFragmentObserver()
             );
         }
         return movies;
     }
 
-
-    public class PoupularMoviesObserver implements Observer<List<PopularMovies>>{
+    public class PoupularMoviesFragmentObserver implements Observer<List<PopularMovies>> {
 
         @Override
         public void onSubscribe(Disposable d) {
@@ -83,9 +84,4 @@ public class MainViewModel extends ViewModel{
             // do nothing
         }
     }
-
-
-
-
-
 }

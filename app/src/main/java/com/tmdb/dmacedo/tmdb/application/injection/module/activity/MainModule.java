@@ -15,10 +15,10 @@ public class MainModule {
 
     @Provides
     static MainViewModel providesMainViewModel(
-            MovieFragment movieFragment,
+            MainActivity mainActivity ,
             MainUseCase useCase,
             SchedulerProvider scheduler) {
-        MainViewModel viewModel = ViewModelProviders.of(movieFragment).get(MovieFragment.class);
+        MainViewModel viewModel = ViewModelProviders.of(mainActivity).get(MainViewModel.class);
         viewModel.setUseCase(useCase);
         viewModel.setProvider(scheduler);
         return viewModel;

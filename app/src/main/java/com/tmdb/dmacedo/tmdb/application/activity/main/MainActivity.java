@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements TvFragment.OnFrag
 
     private ViewPager mViewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

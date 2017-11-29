@@ -1,6 +1,7 @@
 package com.tmdb.dmacedo.tmdb.application.activity.main.adapter;
 
-import android.support.v4.app.Fragment;
+
+import android.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;

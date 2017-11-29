@@ -18,10 +18,12 @@ import com.tmdb.dmacedo.tmdb.application.activity.main.MainActivity;
 import com.tmdb.dmacedo.tmdb.application.activity.main.adapter.MainAdapter;
 import com.tmdb.dmacedo.tmdb.presentation.model.ResourceModel;
 import com.tmdb.dmacedo.tmdb.presentation.viewmodel.main.MainViewModel;
+import com.tmdb.dmacedo.tmdb.presentation.viewmodel.main.MovieFragmentViewModel;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +33,7 @@ import dagger.android.AndroidInjection;
  * Use the {@link MovieFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieFragment extends Fragment {
+public class MovieFragment extends android.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,7 +49,7 @@ public class MovieFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     @Inject
-    protected MainViewModel mainViewModel;
+    protected MovieFragmentViewModel mainViewModel;
 
     public MovieFragment() {
         // Required empty public constructor
@@ -75,7 +77,7 @@ public class MovieFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AndroidInjection.inject((Activity) this.getActivity());
+        AndroidInjection.inject(this);
 
 
 

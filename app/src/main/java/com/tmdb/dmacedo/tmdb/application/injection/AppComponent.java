@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.tmdb.dmacedo.tmdb.application.TmdbApplication;
 import com.tmdb.dmacedo.tmdb.application.injection.module.ActivityBuilder;
+import com.tmdb.dmacedo.tmdb.application.injection.module.FragmentBuilder;
 import com.tmdb.dmacedo.tmdb.application.injection.module.InfrastructureModule;
 import com.tmdb.dmacedo.tmdb.application.injection.module.RepositoryModule;
 import com.tmdb.dmacedo.tmdb.application.injection.module.WebServiceModule;
@@ -20,7 +21,8 @@ import dagger.android.AndroidInjectionModule;
                 WebServiceModule.class,
                 RepositoryModule.class,
                 InfrastructureModule.class,
-                ActivityBuilder.class
+                ActivityBuilder.class,
+                FragmentBuilder.class
         }
 )
 public interface AppComponent {
