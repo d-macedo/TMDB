@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.tmdb.dmacedo.tmdb.application.activity.detail.DetailActivity">
+    tools:context="com.tmdb.dmacedo.tmdb.application.activity.detail.TvDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -24,7 +24,7 @@
             app:toolbarId="@+id/toolbar">
 
             <ImageView
-                android:id="@+id/detail_background_img"
+                android:id="@+id/detail_tv_background_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -41,7 +41,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_detail" />
-
+    <include layout="@layout/content_tv_detail" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,14 +1,27 @@
 package com.tmdb.dmacedo.tmdb.application.activity.main.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.tmdb.dmacedo.tmdb.R;
+import com.tmdb.dmacedo.tmdb.application.activity.detail.DetailActivity;
+import com.tmdb.dmacedo.tmdb.application.activity.detail.TvDetailActivity;
+import com.tmdb.dmacedo.tmdb.application.activity.main.adapter.MainAdapter;
+import com.tmdb.dmacedo.tmdb.application.activity.main.adapter.TvAdapter;
+import com.tmdb.dmacedo.tmdb.presentation.model.ResourceModel;
+import com.tmdb.dmacedo.tmdb.presentation.viewmodel.main.TvSeriesFragmentViewModel;
+
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,12 +36,18 @@ public class TvFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String EXTRA_MOVIE_ID = "id";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView mRecyclerView;
+
+    @Inject
+    protected TvSeriesFragmentViewModel tvSeriesFragmentViewModel;
 
     public TvFragment() {
         // Required empty public constructor
@@ -55,6 +74,21 @@ public class TvFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        tvSeriesFragmentViewModel.loadSeries().observe(this, listResourceModel -> {
+            if (listResourceModel != null && listResourceModel.getState().equals(ResourceModel.State.SUCCESS)) {
+                mRecyclerView.setAdapter(new TvAdapter(listResourceModel.getData(), tvSeries -> {
+                    Intent intent = new Intent(this.getContext(), TvDetailActivity.class);
+                    intent.putExtra(EXTRA_MOVIE_ID, tvSeries);
+                    startActivity(intent);
+                }));
+            }
+        });
+
+
+
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -65,7 +99,12 @@ public class TvFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_tv, container, false);
+
+        mRecyclerView =  rootView.findViewById(R.id.tv_recycler_view);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(rootView.getContext(), 2));
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -78,6 +117,7 @@ public class TvFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        AndroidSupportInjection.inject(this);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {

@@ -12,16 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".application.activity.main.MainActivity">
+        <activity android:name=".application.activity.splash.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".application.activity.main.MainActivity"
+            android:theme="@style/AppMain"></activity>
         <activity
             android:name=".application.activity.detail.DetailActivity"
             android:label="@string/title_activity_detail"
+            android:parentActivityName=".application.activity.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tmdb.dmacedo.tmdb.application.activity.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".application.activity.detail.TvDetailActivity"
+            android:label="@string/title_activity_tv_detail"
             android:parentActivityName=".application.activity.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

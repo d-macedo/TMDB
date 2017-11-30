@@ -1,6 +1,5 @@
 package com.tmdb.dmacedo.tmdb.application.activity.main.adapter;
 
-
 import android.content.Context;
 import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
@@ -9,30 +8,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
 import com.tmdb.dmacedo.tmdb.R;
 import com.tmdb.dmacedo.tmdb.data.webservice.TmdbWebService;
-import com.tmdb.dmacedo.tmdb.entity.PopularMovies;
+import com.tmdb.dmacedo.tmdb.entity.TvSeries;
 
 import java.util.List;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
-    private List<PopularMovies> mDataset;
-
-    private OnItemClickListener mOnClickListener;
+public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ViewHolder> {
 
 
-    public MainAdapter(List<PopularMovies> mDataset, OnItemClickListener itemClickListener) {
-        this.mDataset = mDataset;
-        this.mOnClickListener = itemClickListener;
+    private List<TvSeries> mDataSet;
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public TvAdapter(List<TvSeries> mDataSet, OnItemClickListener mOnItemClickListener) {
+        this.mDataSet = mDataSet;
+        this.mOnItemClickListener = mOnItemClickListener;
     }
 
+
     @Override
-    public MainAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_movie_list_item, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_tv_list_item, parent, false);
 
         WindowManager window = (WindowManager) parent.getContext().getSystemService(Context.WINDOW_SERVICE);
 
@@ -49,39 +48,37 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MainAdapter.ViewHolder holder, int position) {
-
-        String fullPath = TmdbWebService.BASE_IMG_URL + "w500" + mDataset.get(position).getPosterPath();
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        String fullPath = TmdbWebService.BASE_IMG_URL + "w500" + mDataSet.get(position).getPosterPath();
 
         Picasso.with(holder.mImageView.getContext())
                 .load(fullPath).placeholder(R.drawable.ic_launcher_background).into(holder.mImageView);
 
         holder.itemView.setOnClickListener(v -> {
-            if (mOnClickListener != null){
-                mOnClickListener.onItemClicked(mDataset.get(position));
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClicked(mDataSet.get(position));
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mDataSet.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mImageView;
-        TextView mTextView;
 
         ViewHolder(View v) {
             super(v);
-            mImageView = v.findViewById(R.id.imageview_thumbail);
-            /*mTextView = v.findViewById(R.id.text_title);*/
+            mImageView = v.findViewById(R.id.imageview_thumbail_tv);
         }
     }
 
+
     public interface OnItemClickListener {
-        void onItemClicked(PopularMovies popularMovie);
+        void onItemClicked(TvSeries tvSeries);
     }
+
 }

@@ -2,6 +2,7 @@ package com.tmdb.dmacedo.tmdb.data.webservice;
 
 
 import com.tmdb.dmacedo.tmdb.data.webservice.response.PopularMoviesResponse;
+import com.tmdb.dmacedo.tmdb.data.webservice.response.TvSeriesResponse;
 import com.tmdb.dmacedo.tmdb.entity.Movies;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public interface TmdbWebService {
 
     @GET("movie/popular")
     Single<PopularMoviesResponse> getPopularMovies();
+
+    @GET("tv/popular")
+    Single<TvSeriesResponse> getTvSeries();
 
     @GET("movie/detail/{movieId}")
     Single<String> getDetails(@Path("movieId") long id);

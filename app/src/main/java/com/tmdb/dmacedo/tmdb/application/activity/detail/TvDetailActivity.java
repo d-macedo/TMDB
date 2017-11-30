@@ -1,6 +1,5 @@
 package com.tmdb.dmacedo.tmdb.application.activity.detail;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,42 +12,35 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.tmdb.dmacedo.tmdb.R;
 import com.tmdb.dmacedo.tmdb.data.webservice.TmdbWebService;
-import com.tmdb.dmacedo.tmdb.entity.PopularMovies;
+import com.tmdb.dmacedo.tmdb.entity.TvSeries;
 
-public class DetailActivity extends AppCompatActivity {
+public class TvDetailActivity extends AppCompatActivity {
 
     private static final String EXTRA_MOVIE_ID = "id";
 
-    private TextView mDetailText;
+    private TextView mTextView;
 
-    private ImageView mBackground;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_tv_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mDetailText = findViewById(R.id.detail_content_text);
-        mBackground = findViewById(R.id.detail_background_img);
-
+        mTextView = findViewById(R.id.tv_detail);
+        mImageView = findViewById(R.id.detail_tv_background_img);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        PopularMovies movie = getIntent().getParcelableExtra(EXTRA_MOVIE_ID);
+        TvSeries serie = getIntent().getParcelableExtra(EXTRA_MOVIE_ID);
 
-        mDetailText.setText(movie.getOverview());
+        mTextView.setText(serie.getOverview());
+        String bgPath = TmdbWebService.BASE_IMG_URL + "w500" + serie.getBackdropPath();
+        Picasso.with(this).load(bgPath).placeholder(R.drawable.ic_launcher_background).into(mImageView);
 
-
-        String bgPath = TmdbWebService.BASE_IMG_URL + "w500" + movie.getBackdropPath();
-        Picasso.with(this).load(bgPath).placeholder(R.drawable.ic_launcher_background).into(mBackground);
-
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setTitle(movie.getTitle());
-
-
+        getSupportActionBar().setTitle(serie.getName());
 
 
 

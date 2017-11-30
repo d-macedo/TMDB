@@ -12,6 +12,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.tmdb.dmacedo.tmdb.R;
 import com.tmdb.dmacedo.tmdb.application.activity.detail.DetailActivity;
@@ -42,14 +44,19 @@ public class MainActivity extends AppCompatActivity implements TvFragment.OnFrag
         AndroidInjection.inject(this);
         setContentView(R.layout.activity_main);
 
+
+
+
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        /*mToolbar.inflateMenu(R.menu.menu_main);*/
 
         mTabLayout = findViewById(R.id.tab_layout);
         mTabLayout.addTab(mTabLayout.newTab().setText("Tv Series"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Popular Movies"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("Other Categories"));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
 
         final CustomPagerAdapter adapter = new CustomPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
 
@@ -74,6 +81,19 @@ public class MainActivity extends AppCompatActivity implements TvFragment.OnFrag
         });
 
     }
+
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }*/
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch ()
+    }*/
 
     @Override
     public void onFragmentInteraction(Uri uri) {
